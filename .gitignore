@@ -2,3 +2,4 @@ node_modules
 ignore
 .env
 build/public/upload
+build/public/file
