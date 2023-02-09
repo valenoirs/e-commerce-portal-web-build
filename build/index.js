@@ -13,6 +13,7 @@ const express_session_1 = __importDefault(require("express-session"));
 const connect_flash_1 = __importDefault(require("connect-flash"));
 const product_1 = require("./routes/product");
 const admin_1 = require("./routes/admin");
+const root_1 = require("./routes/root");
 const user_1 = require("./routes/user");
 const view_1 = require("./routes/view");
 const order_1 = require("./routes/order");
@@ -39,9 +40,10 @@ app.use(express_1.default.static(path_1.default.join(__dirname, "public")));
 app.use((0, method_override_1.default)("_method"));
 app.use((0, connect_flash_1.default)());
 app.use((req, res, next) => {
-    if (req.session.admin) {
+    if (req.session.admin)
         res.locals.admin = req.session.admin;
-    }
+    if (req.session.root)
+        res.locals.root = req.session.root;
     next();
 });
 app.use(express_ejs_layouts_1.default);
@@ -49,6 +51,7 @@ app.set("views", path_1.default.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use("/", view_1.router);
 app.use("/admin", admin_1.router);
+app.use("/root", root_1.router);
 app.use("/product", product_1.router);
 app.use("/api/user", user_1.router);
 app.use("/api/order", order_1.router);
